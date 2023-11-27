@@ -1,8 +1,13 @@
+import { useQuery } from "@tanstack/react-query";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const Feedback = () => {
+const axiosSecure= useAxiosSecure()
+
+
   var settings = {
     dots: true,
 
@@ -11,19 +16,37 @@ const Feedback = () => {
     autoplaySpeed: 3000,
     arrows: false,
   };
+
+
+  const { data: reviews = [], refetch } = useQuery({
+    queryKey: ["reviews"],
+    queryFn: async () => {
+      const res = await axiosSecure.get('/allReviews');
+      console.log(res.data);
+      return res.data;
+    },
+  });
+
+console.log(reviews);
+
+
+
+
+
+
   return (
     <div className="lg:max-w-[900px] mx-auto bg-white rounded-lg  items-center">
       <div>
         <Slider {...settings}>
           <div className="lg:max-h-[300px] ">
             <h3 className="font-Caveat py-16 md:font-bold text-5xl text-green-950">
-              <span className="text-7xl font-bold lg:text-5xl   "> “</span> The interactive lessons and supportive community fostered a conducive learning environment. I&apos;ve gained confidence in building websites from scratch
+              <span className="text-7xl font-bold lg:text-5xl   "> “</span> {reviews[0]?.description}
               <span className="text-7xl font-bold lg:text-5xl">”</span>
               <div className=" justify-center w-full">
-                <p className="justify-end flex w-full  -ml-10">-Rakib</p>
+                <p className="justify-end flex w-full  -ml-10">-{reviews[0]?.reviewer}</p>
                 <img
                   className="max-w-[70px]"
-                  src="https://i.ibb.co/xHCtCZc/image.png"
+                  src={reviews[0]?.reviewerImg}
                   alt=""
                 />
 
@@ -82,7 +105,13 @@ const Feedback = () => {
               </div>
             </h2>
           </div>
+        
         </Slider>
+<div className="flex w-full justify-center items-center ">
+
+<button className="px-4 py-3 my-10 font-semibold bg-blue-200 tooltip tooltip-bottom" data-tip="Link is under Construction.">See All Reviews</button>
+
+</div>
       </div>
     </div>
   );

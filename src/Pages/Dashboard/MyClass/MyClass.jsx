@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import  { useContext } from "react";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import { AuthContext } from "../../../Firebase/AuthProvider";
@@ -9,14 +9,14 @@ const MyClass = () => {
   const axiosSecure = useAxiosSecure();
   const { user } = useContext(AuthContext);
   const { data: myPendingClasses = [], refetch } = useQuery({
-    queryKey: ["myPendingClasses"],
+    queryKey: ["myPendingClasses" , user],
     queryFn: async () => {
       const res = await axiosSecure.get(`/myPendingClasses/${user?.email}`);
       console.log(res.data);
       return res.data;
     },
   });
-  //   console.log(myPendingClasses);
+    console.log(myPendingClasses);
 
   const handleDeleteUser = (item) => {
     Swal.fire({

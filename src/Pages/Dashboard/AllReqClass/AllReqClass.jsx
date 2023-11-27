@@ -13,6 +13,9 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../../../Firebase/AuthProvider";
 const AllReqClass = () => {
   const axiosSecure = useAxiosSecure();
+
+
+
 const {user} = useContext(AuthContext)
   const { data: pendingClasses = [], refetch } = useQuery({
     queryKey: ["pendingClasses"],
@@ -25,10 +28,10 @@ const {user} = useContext(AuthContext)
 
   const handleApproveClass =async (reqClass) => {
     console.log("update");
-    console.log(reqClass._id);
+    console.log(reqClass);
     axiosSecure.patch(`/approveClass/${reqClass._id}`).then((res) => {
-      console.log(res.data);
-      console.log(reqClass._id);
+      // console.log(res.data);
+      console.log(reqClass);
       if (res.data.modifiedCount > 0) {
         refetch();
         Swal.fire({
@@ -43,6 +46,7 @@ const {user} = useContext(AuthContext)
     const addClassForm = {
       Teacher: reqClass.name,
       classId: reqClass._id,
+      className: reqClass?.title,
       teacherImg: user?.photoURL,
       Title: reqClass.title,
       Price: reqClass.price,
@@ -76,6 +80,18 @@ const {user} = useContext(AuthContext)
       }
     });
   };
+
+
+
+//  const { data: getDataForReview = [] } = useQuery({
+//     queryKey: ["getDataForReview"],
+//     queryFn: async () => {
+//       const res = await axiosSecure.get(`/getDataForReview/:${id}`);
+//       return res.data;
+//     },
+//   });
+
+// console.log(getDataForReview);
 
   return (
     <div>

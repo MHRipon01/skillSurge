@@ -21,6 +21,7 @@ import AllReqClass from "../Pages/Dashboard/AllReqClass/AllReqClass";
 import ClassProgress from "../Pages/Dashboard/ClassProgress/ClassProgress";
 import UpdateClass from "../Pages/Dashboard/MyClass/UpdateClass";
 import MyClassDetails from "../Pages/Dashboard/MyClass/MyClassDetails";
+import EnrolledClassDetails from "../Pages/Dashboard/EnrolledClassDetails/EnrolledClassDetails";
 
 const router = createBrowserRouter([
   {
@@ -64,6 +65,10 @@ const router = createBrowserRouter([
         path: "myEnrollClasses",
         element: <EnrolledClasses></EnrolledClasses>,
       },
+      {
+path:'enrolledClassDetails/:id',
+element:<EnrolledClassDetails></EnrolledClassDetails>
+      },
 
       //for admin
       {
@@ -98,7 +103,7 @@ element: <ClassProgress></ClassProgress>
       },
       {
         path: "myClass",
-        element: <PrivateRoute> <MyClass></MyClass> </PrivateRoute>,
+        element: <PrivateRoute><MyClass></MyClass></PrivateRoute>,
       },
       {
         path: 'updateClass/:id' ,

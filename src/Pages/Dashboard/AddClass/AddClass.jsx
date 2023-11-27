@@ -30,7 +30,7 @@ const AddClass = () => {
     if (res.data.success) {
       //now send the menu item data to the server with the image url
       const reqForm = {
-        name: data.name,
+        name: user?.displayName,
         photoURL: data.photoURL,
         title: data.title,
         price: data.price,

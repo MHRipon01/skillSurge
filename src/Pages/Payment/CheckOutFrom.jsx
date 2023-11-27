@@ -79,7 +79,7 @@ const CheckOutFrom = ({singleClass}) => {
       if (paymentIntent.status === "succeeded") {
         console.log("transaction id", paymentIntent.id);
         setTransactionId(paymentIntent.id);
-
+console.log(singleClass);
         //now save the payment
         const payment = {
           email: user?.email,
@@ -92,7 +92,7 @@ const CheckOutFrom = ({singleClass}) => {
           img:singleClass?.Image,
           status: "pending",
         };
-
+console.log(payment);
         const res = await axiosSecure.post("/payments", payment);
         console.log("payment saved", res.data);
     

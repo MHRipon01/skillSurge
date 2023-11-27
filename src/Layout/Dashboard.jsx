@@ -55,7 +55,7 @@ import useStudent from "../hooks/useStudent";
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/dashboard/classes">
+                  <NavLink to="/dashboard/allPendingClasses">
                     <FaUsers></FaUsers>
                     All Classes
                   </NavLink>
@@ -71,13 +71,13 @@ import useStudent from "../hooks/useStudent";
               </NavLink>
             </li>
             <li>
-              <NavLink to="/dashboard/history">
+              <NavLink to="/dashboard/addClass">
                 <FaCalendar></FaCalendar>Add Class 
               </NavLink>
             </li>
   
             <li>
-              <NavLink to="/dashboard/cart">
+              <NavLink to="/dashboard/myClass">
                 <FaShoppingCart></FaShoppingCart> My Class  
               </NavLink>
             </li>

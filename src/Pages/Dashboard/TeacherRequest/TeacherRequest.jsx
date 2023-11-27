@@ -29,7 +29,8 @@ const TeacherRequest = () => {
   const handleApproveStatus = (user) => {
     console.log("update");
     console.log(user._id);
-    axiosSecure.patch(`/users/teacher/${user._id}`).then((res) => {
+    axiosSecure.patch(`/users/teacher/${user._id}`)
+    .then((res) => {
       console.log(res.data);
       if (res.data.modifiedCount > 0) {
         refetch();

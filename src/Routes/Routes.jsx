@@ -15,6 +15,12 @@ import AllUsers from "../Pages/AllUsers/AllUsers";
 import PrivateRoute from "./PrivateRoute";
 import AdminRoute from "./AdminRoute";
 import TeacherRequest from "../Pages/Dashboard/TeacherRequest/TeacherRequest";
+import AddClass from "../Pages/Dashboard/AddClass/AddClass";
+import MyClass from "../Pages/Dashboard/MyClass/MyClass";
+import AllReqClass from "../Pages/Dashboard/AllReqClass/AllReqClass";
+import ClassProgress from "../Pages/Dashboard/ClassProgress/ClassProgress";
+import UpdateClass from "../Pages/Dashboard/MyClass/UpdateClass";
+import MyClassDetails from "../Pages/Dashboard/MyClass/MyClassDetails";
 
 const router = createBrowserRouter([
   {
@@ -36,7 +42,12 @@ const router = createBrowserRouter([
       },
       {
         path: "/singleClass/:id",
-        element: <PrivateRoute>  <SingleClass></SingleClass></PrivateRoute>,
+        element: (
+          <PrivateRoute>
+            {" "}
+            <SingleClass></SingleClass>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/payment/:id",
@@ -48,6 +59,7 @@ const router = createBrowserRouter([
     path: "dashboard",
     element: <Dashboard></Dashboard>,
     children: [
+      //for student
       {
         path: "myEnrollClasses",
         element: <EnrolledClasses></EnrolledClasses>,
@@ -56,11 +68,45 @@ const router = createBrowserRouter([
       //for admin
       {
         path: "users",
-        element: <AdminRoute>  <AllUsers></AllUsers></AdminRoute>,
+        element: (
+          <AdminRoute>
+            {" "}
+            <AllUsers></AllUsers>
+          </AdminRoute>
+        ),
       },
       {
-        path:'teacherRequest',
-        element: <AdminRoute><TeacherRequest></TeacherRequest> </AdminRoute> 
+        path: "teacherRequest",
+        element: (
+          <AdminRoute>
+            <TeacherRequest></TeacherRequest>{" "}
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "allPendingClasses",
+        element: <AllReqClass></AllReqClass>,
+      },
+      {
+path: 'class/:id',
+element: <ClassProgress></ClassProgress>
+      },
+      //for teacher
+      {
+        path: "addClass",
+        element: <AddClass></AddClass>,
+      },
+      {
+        path: "myClass",
+        element: <PrivateRoute> <MyClass></MyClass> </PrivateRoute>,
+      },
+      {
+        path: 'updateClass/:id' ,
+        element:<PrivateRoute> <UpdateClass></UpdateClass> </PrivateRoute>
+      },
+      {
+        path: 'myClassDetails/:id', 
+        element: <MyClassDetails></MyClassDetails>
       }
     ],
   },

@@ -20,18 +20,7 @@ const AllClasses = () => {
     fetchAllClasses();
   }, [axiosPublic]);
 
-//   useEffect(() => {
-//     const fetchSingleClass = async () => {
-//       try {
-//         const response = await axiosPublic.get("/singleClass/:id");
-//         console.log(response.data);
-//       } catch (error) {
-//         console.log("line 31", error); 
-//       }
-//     };
-//     fetchSingleClass()
-//   }, [axiosPublic]);
-
+ 
   return (
     <div className="grid  grid-cols-1   md:grid-cols-3  ">
       {allClasses?.map((item) => (

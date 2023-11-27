@@ -17,6 +17,10 @@ const TeachOnSkillSurge = () => {
   const axiosPublic = useAxiosPublic();
   const axiosSecure = useAxiosSecure();
   console.log(user);
+
+
+
+  
   const onSubmit = async (data) => {
     console.log(data);
     const imageFile = { image: data.image[0] };
@@ -83,7 +87,7 @@ const TeachOnSkillSurge = () => {
 
     <div>
  {  
-        teacherData?.role === 'teacher' ? <>
+        teacherData?.role === 'teacher' && <>
         <div className=" w-full h-96 flex justify-center rounded-xl items-center bg-gradient-to-r from-blue-50 via-emerald-50 to-purple-50">
              <h2 className="text-4xl font-bold    text-center ">
         You are already a founder of the society. Keep brightening the youth!
@@ -92,111 +96,127 @@ const TeachOnSkillSurge = () => {
         </div>
       
         </>
-     :
-          <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="form-control w-full my-6">
-          <label className="label">
-            <span className="label-text"> Name*</span>
-          </label>
-          <input
-            type="text"
-            placeholder=" Name"
-            {...register("name", { required: true })}
-            required
-            className="input input-bordered w-full"
-          />
-        </div>
-        {/* <div className="form-control w-full my-6">
-          <label className="label">
-            <span className="label-text"> photoURL*</span>
-          </label>
-          <input
-            type="text"
-            placeholder=" photoURL"
-            {...register("photoURL", { required: true })}
-            required
-            className="input input-bordered w-full"
-          />
-        </div> */}
-        <div className="flex gap-6">
-          {/* category */}
-          <div className="form-control w-full my-6">
-            <label className="label">
-              <span className="label-text">Category*</span>
-            </label>
-            <select
-              defaultValue="default"
-              {...register("category", { required: true })}
-              className="select select-bordered w-full"
-            >
-              <option disabled value="default">
-                Select a category
-              </option>
-              <option value="Web Development">Web Development </option>
-              <option value="Digital marketing">Digital marketing</option>
-              <option value="Graphics Design">Graphics Design </option>
-              <option value="UI/UX Design ">UI/UX Design </option>
-              <option value="Front-End Development with React">
-                Front-End Development with React
-              </option>
-            </select>
-          </div>
-          <div className="form-control w-full my-6">
-            <label className="label">
-              <span className="label-text">Experience*</span>
-            </label>
-            <select
-              defaultValue="default"
-              {...register("experience", { required: true })}
-              className="select select-bordered w-full"
-            >
-              <option disabled value="default">
-                Select a category
-              </option>
-              <option value="beginner">Beginner</option>
-              <option value="moderate">Moderate</option>
-              <option value="experienced">Experienced </option>
-            </select>
-          </div>
-        </div>
-        {/* title */}
-        <div className="form-control w-full my-6">
-          <label className="label">
-            <span className="label-text">Title*</span>
-          </label>
-          <input
-            type="text"
-            placeholder="Title"
-            {...register("title", { required: true })}
-            className="input input-bordered w-full"
-          />
-        </div>
+    
+        }
 
-        <div className="form-control w-full my-6">
-          <label className="label">
-            <span className="label-text">Your Image*</span>
-          </label>
-          <input
-            {...register("image", { required: true })}
-            type="file"
-            className="file-input w-full max-w-xs"
-          />
-        </div>
-       
-        {teacherData?.status === "rejected" && (
-          <button className="btn" >
-            Request to another or request again
-          </button>
-        ) 
+        {
+           teacherData?.role === 'student' &&
+           <form onSubmit={handleSubmit(onSubmit)}>
+         <div className="form-control w-full my-6">
+           <label className="label">
+             <span className="label-text"> Name*</span>
+           </label>
+           <input
+             type="text"
+             placeholder=" Name"
+             {...register("name", { required: true })}
+             required
+             className="input input-bordered w-full"
+           />
+         </div>
         
+         <div className="flex gap-6">
+           {/* category */}
+           <div className="form-control w-full my-6">
+             <label className="label">
+               <span className="label-text">Category*</span>
+             </label>
+             <select
+               defaultValue="default"
+               {...register("category", { required: true })}
+               className="select select-bordered w-full"
+             >
+               <option disabled value="default">
+                 Select a category
+               </option>
+               <option value="Web Development">Web Development </option>
+               <option value="Digital marketing">Digital marketing</option>
+               <option value="Graphics Design">Graphics Design </option>
+               <option value="UI/UX Design ">UI/UX Design </option>
+               <option value="Front-End Development with React">
+                 Front-End Development with React
+               </option>
+             </select>
+           </div>
+           <div className="form-control w-full my-6">
+             <label className="label">
+               <span className="label-text">Experience*</span>
+             </label>
+             <select
+               defaultValue="default"
+               {...register("experience", { required: true })}
+               className="select select-bordered w-full"
+             >
+               <option disabled value="default">
+                 Select a category
+               </option>
+               <option value="beginner">Beginner</option>
+               <option value="moderate">Moderate</option>
+               <option value="experienced">Experienced </option>
+             </select>
+           </div>
+         </div>
+         {/* title */}
+         <div className="form-control w-full my-6">
+           <label className="label">
+             <span className="label-text">Title*</span>
+           </label>
+           <input
+             type="text"
+             placeholder="Title"
+             {...register("title", { required: true })}
+             className="input input-bordered w-full"
+           />
+         </div>
+ 
+         <div className="form-control w-full my-6">
+           <label className="label">
+             <span className="label-text">Your Image*</span>
+           </label>
+           <input
+             {...register("image", { required: true })}
+             type="file"
+             className="file-input w-full max-w-xs"
+           />
+         </div>
+        
+         {teacherData?.status === "rejected" && (
+           <button className="btn" >
+             Request again
+           </button>
+          
+         ) 
+         }
+         {teacherData?.role === "student" && teacherData.status !== 'rejected' && (
+           <button className="btn"
+           disabled={isButtonDisabled}
+           
+           >
+             Submit for review
+           </button>
+          
+         ) 
+         }
+ 
+ 
        
-
-        }
-      
-      </form>
+       </form>
         }
 
+{
+  teacherData?.role === 'admin' &&
+  <>
+  <div className=" w-full h-96 flex justify-center rounded-xl items-center bg-gradient-to-r from-blue-50 via-emerald-50 to-purple-50">
+             <h2 className="text-4xl font-bold    text-center ">
+       You&apos;re an admin. No need to change your role! 
 
+        </h2> 
+        </div>
+  <div>
+    <h2></h2>
+  </div>
+  </>
+}
 
 
 

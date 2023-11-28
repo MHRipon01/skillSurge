@@ -22,6 +22,7 @@ import ClassProgress from "../Pages/Dashboard/ClassProgress/ClassProgress";
 import UpdateClass from "../Pages/Dashboard/MyClass/UpdateClass";
 import MyClassDetails from "../Pages/Dashboard/MyClass/MyClassDetails";
 import EnrolledClassDetails from "../Pages/Dashboard/EnrolledClassDetails/EnrolledClassDetails";
+import Profile from "../Pages/Dashboard/Profile/Profile";
 
 const router = createBrowserRouter([
   {
@@ -66,8 +67,8 @@ const router = createBrowserRouter([
         element: <EnrolledClasses></EnrolledClasses>,
       },
       {
-path:'enrolledClassDetails/:id',
-element:<EnrolledClassDetails></EnrolledClassDetails>
+        path: "enrolledClassDetails/:id",
+        element: <EnrolledClassDetails></EnrolledClassDetails>,
       },
 
       //for admin
@@ -93,8 +94,12 @@ element:<EnrolledClassDetails></EnrolledClassDetails>
         element: <AllReqClass></AllReqClass>,
       },
       {
-path: 'class/:id',
-element: <ClassProgress></ClassProgress>
+        path: "class/:id",
+        element: <ClassProgress></ClassProgress>,
+      },
+      {
+        path:'profile',
+        element: <Profile></Profile>
       },
       //for teacher
       {
@@ -103,16 +108,25 @@ element: <ClassProgress></ClassProgress>
       },
       {
         path: "myClass",
-        element: <PrivateRoute><MyClass></MyClass></PrivateRoute>,
+        element: (
+          <PrivateRoute>
+            <MyClass></MyClass>
+          </PrivateRoute>
+        ),
       },
       {
-        path: 'updateClass/:id' ,
-        element:<PrivateRoute> <UpdateClass></UpdateClass> </PrivateRoute>
+        path: "updateClass/:id",
+        element: (
+          <PrivateRoute>
+            {" "}
+            <UpdateClass></UpdateClass>{" "}
+          </PrivateRoute>
+        ),
       },
       {
-        path: 'myClassDetails/:id', 
-        element: <MyClassDetails></MyClassDetails>
-      }
+        path: "myClassDetails/:id",
+        element: <MyClassDetails></MyClassDetails>,
+      },
     ],
   },
 

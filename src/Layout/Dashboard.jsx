@@ -49,7 +49,7 @@ import useStudent from "../hooks/useStudent";
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/dashboard/bookings">
+                  <NavLink to="/dashboard/profile">
                     <FaBook></FaBook>
                    Profile 
                   </NavLink>
@@ -87,7 +87,7 @@ import useStudent from "../hooks/useStudent";
               </NavLink>
             </li>
             <li>
-              <NavLink to="/dashboard/review">
+              <NavLink to="/dashboard/profile">
                 <FaAd></FaAd> Profile 
               </NavLink>
             </li>
@@ -115,7 +115,7 @@ import useStudent from "../hooks/useStudent";
   
             
             <li>
-              <NavLink to="/dashboard/review">
+              <NavLink to="/dashboard/profile">
                 <FaAd></FaAd> Profile 
               </NavLink>
             </li>

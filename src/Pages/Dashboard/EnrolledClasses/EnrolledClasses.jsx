@@ -18,14 +18,17 @@ const EnrolledClasses = () => {
 
   return (
     <div className="overflow-x-hidden">
-      EnrolledClasses {payments.length}
-      <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 w-full">
+      <div className="text-3xl w-full font-bold my-10 text-center ">
+        <h2>EnrolledClasses {payments.length}
+ </h2>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 w-full ">
         {payments.map((payment) => (
           <div
             key={payment._id}
-            className="grid grid-cols-1 md:grid-cols-3 w-full"
+            className="grid grid-cols-1 md:grid-cols-3 w-full   my-7"
           >
-            <div className="card w-96 ml-6  shadow-xl py-20 bg-[#F8FBE9]">
+            <div className="card w-96 ml-6  shadow-xl py-20 bg-[#dff4fbfc]">
               <div className="card-body">
                 <div>
                   <img src={payment?.img} alt="" />

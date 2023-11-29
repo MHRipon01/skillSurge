@@ -23,6 +23,7 @@ import UpdateClass from "../Pages/Dashboard/MyClass/UpdateClass";
 import MyClassDetails from "../Pages/Dashboard/MyClass/MyClassDetails";
 import EnrolledClassDetails from "../Pages/Dashboard/EnrolledClassDetails/EnrolledClassDetails";
 import Profile from "../Pages/Dashboard/Profile/Profile";
+import RoleHome from "../Pages/Dashboard/RoleHome/RoleHome";
 
 const router = createBrowserRouter([
   {
@@ -80,6 +81,10 @@ const router = createBrowserRouter([
             <AllUsers></AllUsers>
           </AdminRoute>
         ),
+      },
+      {
+path: 'roleHome',
+element: <RoleHome></RoleHome>
       },
       {
         path: "teacherRequest",

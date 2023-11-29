@@ -84,7 +84,7 @@ const Navbar = () => {
                     {user?.displayName}
                   </h3>
                 </li>
-                <Link to={'/dashboard'}>
+                <Link to={'/dashboard/roleHome'}>
                   <li>
                     Dashboard 
                   </li>

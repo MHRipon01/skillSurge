@@ -59,19 +59,21 @@ const TotalStatistics = () => {
         <div>
             <div className="stats shadow  py-16 pt-10 mx-auto w-full">
   
-  <div className="stat place-items-center  ">
+  <div data-aos="zoom-in" className="stat place-items-center  ">
     <div className="stat-title">Total User</div>
     <div className="stat-value">{totalUserCount}</div>
     
   </div>
   
-  <div className="stat place-items-center">
+  <div data-aos="zoom-in-up" className="stat place-items-center">
     <div className="stat-title">Total Classes</div>
     <div className="stat-value text-secondary">{totalClassCount}</div>
     
   </div>
   
-  <div className="stat place-items-center">
+  <div data-aos="flip-left"
+     data-aos-easing="ease-out-cubic"
+     data-aos-duration="2000" className="stat place-items-center">
     <div className="stat-title">Total Enrollment </div>
     <div className="stat-value">{totalEnrollmentCount}</div>
     

@@ -7,6 +7,8 @@ import { FaTrashAlt, FaUsers } from "react-icons/fa";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../../Firebase/AuthProvider";
 import Rating from "react-rating";
+import Pagination from "@mui/material/Pagination";
+import Stack from "@mui/material/Stack";
 
 const EnrolledClassDetails = () => {
   const { user } = useContext(AuthContext);
@@ -20,14 +22,8 @@ const EnrolledClassDetails = () => {
 
   // console.log(enrolledClass);
   const today = new Date();
-  const formattedDate = today.toISOString().split('T')[0]; // Extracts only 
+  const formattedDate = today.toISOString().split("T")[0]; // Extracts only
 
-
-
-
-
-
-  
   const { data: enrolledClass = [] } = useQuery({
     queryKey: ["enrolledClass", id],
     queryFn: async () => {
@@ -87,41 +83,36 @@ const EnrolledClassDetails = () => {
       submissionCount: 0,
       date: formattedDate,
     };
-console.log(submittedData);
+    console.log(submittedData);
     const submittedAssignment = axiosSecure.post(
       "/submitAssignment",
       submittedData
     );
-    
-console.log(submittedAssignment);    
+
+    console.log(submittedAssignment);
+    submittedAssignment;
+
     submittedAssignment
+      .then((response) => {
+        // Check if the response data exists and contains insertedId
+        if (response.data && response.data.result.insertedId) {
+          const insertedId = response.data.result.insertedId;
+          // Now you can use insertedId here or perform any other actions
+          console.log("Inserted ID:", insertedId);
 
-    
-  submittedAssignment
-  .then((response) => {
-    // Check if the response data exists and contains insertedId
-    if (response.data && response.data.result.insertedId) {
-      const insertedId = response.data.result.insertedId;
-      // Now you can use insertedId here or perform any other actions
-      console.log('Inserted ID:', insertedId);
-
-      Swal.fire({
-        title: "Success!",
-        text: "Assignment submitted Successfully",
-        icon: "success",
-        confirmButtonText: "Okay",
+          Swal.fire({
+            title: "Success!",
+            text: "Assignment submitted Successfully",
+            icon: "success",
+            confirmButtonText: "Okay",
+          });
+        }
+      })
+      .catch((error) => {
+        // Handle error case if needed
+        console.error("Error submitting assignment:", error);
       });
-    }
-  })
-  .catch((error) => {
-    // Handle error case if needed
-    console.error("Error submitting assignment:", error);
-  });
-};
-
-
-
-
+  };
 
   return (
     <div>
@@ -251,6 +242,11 @@ console.log(submittedAssignment);
             ))}
           </tbody>
         </table>
+      </div>
+      <div className="text-center   flex items-center justify-end my-5   mr-12 ">
+        <Stack spacing={1}>
+          <Pagination count={10} variant="outlined" shape="rounded" />
+        </Stack>
       </div>
     </div>
   );

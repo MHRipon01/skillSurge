@@ -50,20 +50,12 @@ const Profile = () => {
   console.log(userProfile);
 
   return (
-    <div>
-      prof
-      {/* <div>
-          <h2>{userProfile?.name} </h2>
-      <h3> Role: {userProfile?.role}</h3>
-      <div className="w-32">
-        <img src={user?.photoURL} alt="" />
-      </div>
-      <h3>Email: {user?.email} </h3>
-      <p>{userProfile?.phone}</p>
-      <div>
-      </div> */}
+    <div className=" h-screen flex justify-center items-center  ">
+      
     
-        <div className="max-w-3xl mx-auto bg-white shadow-md rounded-lg overflow-hidden">
+    
+    
+        <div className="max-w-3xl mx-automy-auto bg-white shadow-md rounded-lg overflow-hidden">
           <div className="md:flex">
             <div className="md:flex-shrink-0">
               <img

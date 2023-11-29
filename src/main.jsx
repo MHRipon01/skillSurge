@@ -15,6 +15,11 @@ import {
 import { Toaster } from "react-hot-toast";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import AOS from 'aos';
+import 'aos/dist/aos.css'; // Import AOS styles
+
+
+
 
 const queryClient = new QueryClient();
 

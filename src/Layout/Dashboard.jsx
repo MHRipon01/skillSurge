@@ -15,7 +15,19 @@ import {
   import useAdmin from "../hooks/useAdmin";
 import useTeacher from "../hooks/useTeacher";
 import useStudent from "../hooks/useStudent";
-  
+import { GiFaceToFace } from "react-icons/gi";
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+import HomeIcon from '@mui/icons-material/Home';
+import GroupIcon from '@mui/icons-material/Group';
+import SchoolIcon from '@mui/icons-material/School';
+import ClassIcon from '@mui/icons-material/Class';
+import AddTaskIcon from '@mui/icons-material/AddTask';
+import MilitaryTechIcon from '@mui/icons-material/MilitaryTech';
+import SubscriptionsIcon from '@mui/icons-material/Subscriptions';
+
+
+
+
   const Dashboard = () => {
     //TODO: get isAdmin value from the db
     const [isAdmin] = useAdmin()
@@ -25,38 +37,38 @@ import useStudent from "../hooks/useStudent";
     return (
       <div className="lg:flex">
         {/*  dashboard side bar */}
-        <div className="lg:w-64 min-h-screen bg-orange-400">
+        <div className="lg:w-64 min-h-screen bg-blue-300">
           <ul className="menu p-4">
             {isAdmin &&
          
     <>
                 <li>
                   <NavLink to="/">
-                    <FaHome></FaHome> Admin Home
+                  <HomeIcon></HomeIcon>  Home
                   </NavLink>
                 </li>
                 <li>
                   <NavLink to="/dashboard/users">
-                    <FaUtensils></FaUtensils>
+                   <GroupIcon></GroupIcon>
                  Users
                   </NavLink>
                 </li>
   
                 <li>
                   <NavLink to="/dashboard/teacherRequest">
-                    <FaList></FaList>
+                  <SchoolIcon></SchoolIcon>
                 Teacher Request 
                   </NavLink>
                 </li>
                 <li>
                   <NavLink to="/dashboard/profile">
-                    <FaBook></FaBook>
+                  <ManageAccountsIcon></ManageAccountsIcon>
                    Profile 
                   </NavLink>
                 </li>
                 <li>
                   <NavLink to="/dashboard/allPendingClasses">
-                    <FaUsers></FaUsers>
+                    <ClassIcon></ClassIcon>
                     All Classes
                   </NavLink>
                 </li>
@@ -66,36 +78,33 @@ import useStudent from "../hooks/useStudent";
            {isTeacher &&
               <>
             <li>
-              <NavLink to="/dashboard/teacherHome">
-                <FaHome></FaHome> Teacher Home
+              <NavLink to="/">
+                 <HomeIcon></HomeIcon> Home
               </NavLink>
             </li>
             <li>
               <NavLink to="/dashboard/addClass">
-                <FaCalendar></FaCalendar>Add Class 
+                <AddTaskIcon></AddTaskIcon> Add Class 
               </NavLink>
             </li>
   
             <li>
               <NavLink to="/dashboard/myClass">
-                <FaShoppingCart></FaShoppingCart> My Class  
+             <MilitaryTechIcon></MilitaryTechIcon>
+                 My Class  
               </NavLink>
             </li>
             <li>
               <NavLink to="/dashboard/myEnrollClasses">
-                <FaShoppingCart></FaShoppingCart> My Enrolled Class  
+                <SubscriptionsIcon></SubscriptionsIcon> My Enrolled Class  
               </NavLink>
             </li>
             <li>
               <NavLink to="/dashboard/profile">
-                <FaAd></FaAd> Profile 
+                <ManageAccountsIcon></ManageAccountsIcon> Profile 
               </NavLink>
             </li>
-            <li>
-              <NavLink to="/ ">
-                <FaList></FaList> Home Page 
-              </NavLink>
-            </li>
+           
           </>
            } 
           
@@ -103,27 +112,23 @@ import useStudent from "../hooks/useStudent";
           {isStudent &&
               <>
             <li>
-              <NavLink to="/dashboard/teacherHome">
-                <FaHome></FaHome> Student Home
+              <NavLink to="/">
+              <HomeIcon></HomeIcon> Home
               </NavLink>
             </li>
             <li>
               <NavLink to="/dashboard/myEnrollClasses">
-                <FaCalendar></FaCalendar>My Enrolled Class 
+              <SubscriptionsIcon></SubscriptionsIcon> My Enrolled Class 
               </NavLink>
             </li>
   
             
             <li>
               <NavLink to="/dashboard/profile">
-                <FaAd></FaAd> Profile 
+              <ManageAccountsIcon></ManageAccountsIcon> Profile 
               </NavLink>
             </li>
-            <li>
-              <NavLink to="/ ">
-                <FaList></FaList> Home Page 
-              </NavLink>
-            </li>
+           
           </>
            } 
         
@@ -136,6 +141,7 @@ import useStudent from "../hooks/useStudent";
         </div>
         {/* dashboard content */}
         <div className="flex-1">
+         
           <Outlet></Outlet>
         </div>
       </div>

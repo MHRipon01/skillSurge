@@ -2,9 +2,11 @@ const WhatWeOffer = () => {
   return (
     <div>
       <div className="grid grid-cols-1 md:grid-cols-3 py-20">
-        <div className="card w-96  shadow-xl py-20 bg-[#F8FBE9]">
+        <div data-aos="flip-right" className="card w-96  shadow-xl py-20 bg-[#F8FBE9]">
           <div className="card-body">
-            <h2 className="text-2xl font-bold my-4 text-center">Lifetime Support</h2>
+            <h2 className="text-2xl font-bold my-4 text-center">
+              Lifetime Support
+            </h2>
             <p>
               SkillSurge and its students share a lifetime bond. We strengthen
               our bond with you by providing lifelong support that helps you
@@ -15,9 +17,16 @@ const WhatWeOffer = () => {
           </div>
         </div>
 
-        <div className="card w-96   shadow-xl py-20 bg-[#F9F9EF] ">
+        <div
+          data-aos="flip-left"
+          data-aos-easing="ease-out-cubic"
+          data-aos-duration="2000"
+          className="card w-96   shadow-xl py-20 bg-[#F9F9EF] "
+        >
           <div className="card-body">
-            <h2 className="text-2xl font-bold my-4 text-center">Career Placement Support</h2>
+            <h2 className="text-2xl font-bold my-4 text-center">
+              Career Placement Support
+            </h2>
             <p>
               Our career placement department is ready to help you find a
               lucrative job. We ensure your resume gets into the hands of the
@@ -29,9 +38,12 @@ const WhatWeOffer = () => {
           </div>
         </div>
 
-        <div className="card w-96   shadow-xl py-20 bg-[#FAF6F4] ">
+        <div data-aos="flip-left" className="card w-96   shadow-xl py-20 bg-[#FAF6F4] ">
           <div className="card-body">
-            <h2 className="text-2xl font-bold my-4 text-center"> Class Videos </h2>
+            <h2 className="text-2xl font-bold my-4 text-center">
+              {" "}
+              Class Videos{" "}
+            </h2>
             <p>
               No need to worry if you miss a topic in the class. We record most
               of our classes so that students who miss a session can still get

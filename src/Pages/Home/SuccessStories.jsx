@@ -1,7 +1,7 @@
 const SuccessStories = () => {
   return (
     <div>
-        <div className="w-full text-center mt-14"> 
+        <div data-aos="fade-up" className="w-full text-center mt-14"> 
            <h2 className="text-4xl font-bold text-red-400">Success Stories </h2>
            <p className="text-gray-400">The presence of our students in the ever expanding IT industry <br /> motivates us, drives us to guide more people towards a sustainable future.</p>  
         </div>

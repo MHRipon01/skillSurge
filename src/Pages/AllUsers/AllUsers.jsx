@@ -5,26 +5,14 @@ import Swal from "sweetalert2";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useState } from "react";
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+import Typography from "@mui/material/Typography";
+import Pagination from "@mui/material/Pagination";
 
 const AllUsers = () => {
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const pageSize = 10; // Number of items per page
 
-
-
-  
   // State for holding search term and search results
   const [searchTerm, setSearchTerm] = useState("");
   const { data: searchedUsers = [] } = useQuery({
@@ -34,7 +22,9 @@ const AllUsers = () => {
         return [];
       }
       try {
-        const response = await axiosSecure.get(`/users/search?searchTerm=${searchTerm}`);
+        const response = await axiosSecure.get(
+          `/users/search?searchTerm=${searchTerm}`
+        );
         return response.data;
       } catch (error) {
         console.error("Error searching users:", error);
@@ -44,29 +34,37 @@ const AllUsers = () => {
     enabled: !!searchTerm.trim(), // Query will be enabled only if searchTerm has a non-empty value
   });
 
+  const { data: users = [], refetch } = useQuery({
+    queryKey: ["users", page], // Include 'page' in the query key
+    queryFn: async () => {
+      try {
+        const response = await axiosSecure.get(
+          `/users?page=${page}&pageSize=${pageSize}`
+        );
+        setPage(response.data.currentPage);
+        setTotalPages(response.data.totalPages);
+        return response.data.data;
+      } catch (error) {
+        console.error("Error fetching users:", error);
+        return [];
+      }
+    },
+  });
+
   // Function to handle input change for search term
   const handleSearchInputChange = (event) => {
     setSearchTerm(event.target.value);
   };
 
-
-
-
-
-
-
-
-
-
   const axiosSecure = useAxiosSecure();
 
-  const { data: users = [], refetch } = useQuery({
-    queryKey: ["users"],
-    queryFn: async () => {
-      const res = await axiosSecure.get("/users");
-      return res.data;
-    },
-  });
+  // const { data: users = [], refetch } = useQuery({
+  //   queryKey: ["users"],
+  //   queryFn: async () => {
+  //     const res = await axiosSecure.get("/users");
+  //     return res.data;
+  //   },
+  // });
 
   // console.log(users);
   const handleMakeAdmin = (user) => {
@@ -110,6 +108,10 @@ const AllUsers = () => {
     });
   };
 
+  const handlePageChange = (event, value) => {
+    setPage(value);
+  };
+
   return (
     <div>
       <div className="flex justify-evenly my-4">
@@ -117,8 +119,8 @@ const AllUsers = () => {
         <h2 className="text-3xl">Total Users: {users.length}</h2>
       </div>
 
-         {/* Search input */}
-         <div className="my-4 mx-6">
+      {/* Search input */}
+      <div className="my-4 mx-6">
         <input
           type="text"
           placeholder="Search by username or email"
@@ -127,8 +129,6 @@ const AllUsers = () => {
           className="border lg:w-[300px] border-gray-300 rounded px-3 py-2"
         />
       </div>
-
-
 
       <div className="overflow-x-auto">
         <table className="table table-zebra w-full">
@@ -144,44 +144,61 @@ const AllUsers = () => {
             </tr>
           </thead>
           <tbody>
-  {(searchTerm.trim() !== "" ? searchedUsers : users).map((user, index) => (
-    <tr key={user._id}>
-      <th>{index + 1}</th>
-      <td>
-        <div className="flex items-center  gap-3">
-          <div className="avatar">
-            <div className="mask mask-squircle w-12 h-12">
-              <img src={user?.img} alt="Avatar Tailwind CSS Component" />
-            </div>
-          </div>
-        </div>
-      </td>
-      <td>{user.name}</td>
-      <td>{user.email}</td>
-      <td>
-        {user.role === "admin" ? (
-          "Admin"
-        ) : (
-          <button
-            onClick={() => handleMakeAdmin(user)}
-            className="btn btn-lg bg-orange-400"
-          >
-            <FaUsers className="text-red-600 text-xl "></FaUsers>
-          </button>
-        )}
-      </td>
-      <td>
-        <button
-          onClick={() => handleDeleteUser(user)}
-          className="btn btn-ghost btn-xs"
-        >
-          <FaTrashAlt className="text-red-600 text-xl"></FaTrashAlt>
-        </button>
-      </td>
-    </tr>
-  ))}
-</tbody>
+            {(searchTerm.trim() !== "" ? searchedUsers : users).map(
+              (user, index) => (
+                <tr key={user._id}>
+                  <th>{index + 1}</th>
+                  <td>
+                    <div className="flex items-center  gap-3">
+                      <div className="avatar">
+                        <div className="mask mask-squircle w-12 h-12">
+                          <img
+                            src={user?.img}
+                            alt="Avatar Tailwind CSS Component"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td>{user.name}</td>
+                  <td>{user.email}</td>
+                  <td>
+                    {user.role === "admin" ? (
+                      "Admin"
+                    ) : (
+                      <button
+                        onClick={() => handleMakeAdmin(user)}
+                        className="btn btn-lg bg-purple-200"
+                      >
+                        <FaUsers className=" text-xl "></FaUsers>
+                      </button>
+                    )}
+                  </td>
+                  <td>
+                    <button
+                      onClick={() => handleDeleteUser(user)}
+                      className="btn btn-ghost btn-xs"
+                    >
+                      <FaTrashAlt className="text-red-600 text-xl"></FaTrashAlt>
+                    </button>
+                  </td>
+                </tr>
+              )
+            )}
+          </tbody>
 
+          <div className="text-center   flex items-center justify-end my-5   mr-12 ">
+            <Pagination
+             
+                count={totalPages}
+              page={page}
+              onChange={handlePageChange}
+              variant="outlined"
+              shape="rounded"
+            />
+          </div>
+
+         
         </table>
       </div>
     </div>

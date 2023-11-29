@@ -11,9 +11,12 @@ import { GiProgression } from "react-icons/gi";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../../Firebase/AuthProvider";
+  import Pagination from '@mui/material/Pagination';
+  import Stack from '@mui/material/Stack';
+
+
 const AllReqClass = () => {
   const axiosSecure = useAxiosSecure();
-
 
 
 const {user} = useContext(AuthContext)
@@ -173,6 +176,10 @@ const {user} = useContext(AuthContext)
             ))}
           </tbody>
         </table>
+      </div>
+      <div className="text-center   flex items-center justify-end my-5   mr-12 ">
+      <Pagination  count={10} color="secondary" hidePrevButton hideNextButton />
+
       </div>
     </div>
   );

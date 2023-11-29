@@ -12,7 +12,10 @@ const AllUsers = () => {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const pageSize = 10; // Number of items per page
-
+  // Function to handle input change for search term
+  const handleSearchInputChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
   // State for holding search term and search results
   const [searchTerm, setSearchTerm] = useState("");
   const { data: searchedUsers = [] } = useQuery({
@@ -51,10 +54,7 @@ const AllUsers = () => {
     },
   });
 
-  // Function to handle input change for search term
-  const handleSearchInputChange = (event) => {
-    setSearchTerm(event.target.value);
-  };
+
 
   const axiosSecure = useAxiosSecure();
 
@@ -112,6 +112,11 @@ const AllUsers = () => {
     setPage(value);
   };
 
+
+  console.log(searchedUsers );
+console.log(users);
+
+
   return (
     <div>
       <div className="flex justify-evenly my-4">
@@ -144,9 +149,8 @@ const AllUsers = () => {
             </tr>
           </thead>
           <tbody>
-            {(searchTerm.trim() !== "" ? searchedUsers : users).map(
-              (user, index) => (
-                <tr key={user._id}>
+  {(searchTerm.trim() !== "" ? searchedUsers : users).map((user, index) => (
+    <tr key={user._id}>
                   <th>{index + 1}</th>
                   <td>
                     <div className="flex items-center  gap-3">

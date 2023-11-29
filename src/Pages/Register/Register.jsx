@@ -39,32 +39,37 @@ const Register = () => {
         phone: data.phone
       };
 
-      axiosPublic
-        .post("/users", userInfo)
-        .then((res) => {
-          if (res.data.insertedId) {
-            console.log("user added to the db");
-            //  reset();
-            navigate("/");
-            Swal.fire({
-              position: "top-end",
-              icon: "success",
-              title: "Your profile info updated",
-              showConfirmButton: false,
-              timer: 1000,
-            });
-          }
-        })
-        .then(() => {
-          console.log("user profile info updated");
-        })
-        .catch((error) => {
-          console.log(error);
-          toast.error("Error: " + error.message); // Use 'toast.error()' instead of 'Toaster.error()'
-        });
-        
-    });
-  };
+   
+  axiosPublic
+  .post("/users", userInfo)
+  .then((res) => {
+            // console.log(res);
+            if (res.data.insertedId) {
+              console.log("user added to the db");
+              //  reset();
+              navigate("/");
+              Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Your profile info updated",
+                showConfirmButton: false,
+                timer: 1000,
+              });
+            }
+          })
+          .then(() => {
+            console.log("user profile info updated");
+          })
+  .catch((error) => {
+    console.error(error);
+    toast.error(error.response?.data?.message || "Registration failed");
+  });
+})
+.catch((error) => {
+console.error(error);
+toast.error(error.message || "Registration failed");
+});
+};
 
   return (
     <div>

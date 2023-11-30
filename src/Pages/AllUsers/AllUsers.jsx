@@ -3,60 +3,103 @@ import { useQuery } from "@tanstack/react-query";
 import { FaTrashAlt, FaUsers } from "react-icons/fa";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Typography from "@mui/material/Typography";
 import Pagination from "@mui/material/Pagination";
 
 const AllUsers = () => {
+  const [users, setUsers] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const pageSize = 10; // Number of items per page
-  // Function to handle input change for search term
+
+  const axiosSecure = useAxiosSecure();
+  // State for holding search term and search results
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const [searchedUsers, setSearchedUsers] = useState([]);
+  // const { data: searchedUsers = [] } = useQuery({
+  //   queryKey: ["searchedUsers", searchTerm],
+  //   queryFn: async () => {
+  //     if (searchTerm.trim() === "") {
+  //       return [];
+  //     }
+  //     try {
+  //       const response = await axiosSecure.get(
+  //         `/users/search?searchTerm=${searchTerm}`
+  //       );
+  //       return response.data;
+  //     } catch (error) {
+  //       console.error("Error searching users:", error);
+  //       return [];
+  //     }
+  //   },
+  //   enabled: !!searchTerm.trim(), // Query will be enabled only if searchTerm has a non-empty value
+  // });
+
+  // useEffect(() => {
+  //   if (searchTerm.trim() === "") {
+  //     setSearchedUsers([]);
+  //     return;
+  //   }
+
+  //   const fetchSearchedUsers = async () => {
+  //     try {
+  //       const response = await axiosSecure.get(
+  //         `/users/search?searchTerm=${searchTerm}`
+  //       );
+  //       console.log(response.data);
+  //       setSearchedUsers(response.data);
+  //     } catch (error) {
+  //       console.error("Error here:", error);
+  //       setSearchedUsers([]);
+  //     }
+  //   };
+
+  //   fetchSearchedUsers();
+  // }, [searchTerm, axiosSecure]);
+
+  console.log(searchTerm);
+
   const handleSearchInputChange = (event) => {
     setSearchTerm(event.target.value);
   };
-  // State for holding search term and search results
-  const [searchTerm, setSearchTerm] = useState("");
-  const { data: searchedUsers = [] } = useQuery({
-    queryKey: ["searchedUsers", searchTerm],
-    queryFn: async () => {
-      if (searchTerm.trim() === "") {
-        return [];
-      }
-      try {
-        const response = await axiosSecure.get(
-          `/users/search?searchTerm=${searchTerm}`
-        );
-        return response.data;
-      } catch (error) {
-        console.error("Error searching users:", error);
-        return [];
-      }
-    },
-    enabled: !!searchTerm.trim(), // Query will be enabled only if searchTerm has a non-empty value
-  });
+  // const { data: users = [], refetch } = useQuery({
+  //   queryKey: ["users", page], // Include 'page' in the query key
+  //   queryFn: async () => {
+  //     try {
+  //       const response = await axiosSecure.get(
+  //         `/users?page=${page}&pageSize=${pageSize}`
+  //       );
+  //       setPage(response.data.currentPage);
+  //       setTotalPages(response.data.totalPages);
+  //       return response.data.data;
+  //     } catch (error) {
+  //       console.error("Error fetching users:", error);
+  //       return [];
+  //     }
+  //   },
+  // });
 
-  const { data: users = [], refetch } = useQuery({
-    queryKey: ["users", page], // Include 'page' in the query key
-    queryFn: async () => {
+  useEffect(() => {
+    const fetchUsers = async () => {
       try {
         const response = await axiosSecure.get(
-          `/users?page=${page}&pageSize=${pageSize}`
+          `/users?page=${page}&pageSize=${pageSize}&search=${searchTerm}`
         );
         setPage(response.data.currentPage);
         setTotalPages(response.data.totalPages);
-        return response.data.data;
+        setUsers(response.data.data);
+        setSearchedUsers(response.data.data)
       } catch (error) {
         console.error("Error fetching users:", error);
-        return [];
+        setUsers([]);
       }
-    },
-  });
+    };
 
-
-
-  const axiosSecure = useAxiosSecure();
+    fetchUsers();
+  }, [page, pageSize, axiosSecure, searchTerm]);
 
   // const { data: users = [], refetch } = useQuery({
   //   queryKey: ["users"],
@@ -112,10 +155,12 @@ const AllUsers = () => {
     setPage(value);
   };
 
-
-  console.log(searchedUsers );
-console.log(users);
-
+  console.log(searchedUsers);
+  console.log(users);
+  //
+  // useEffect(() => {
+  //   setSearchedUsers(users);
+  // }, [setSearchedUsers, users]);
 
   return (
     <div>
@@ -148,61 +193,139 @@ console.log(users);
               <th>Action</th>
             </tr>
           </thead>
-          <tbody>
-  {(searchTerm.trim() !== "" ? searchedUsers : users).map((user, index) => (
-    <tr key={user._id}>
-                  <th>{index + 1}</th>
-                  <td>
-                    <div className="flex items-center  gap-3">
-                      <div className="avatar">
-                        <div className="mask mask-squircle w-12 h-12">
-                          <img
-                            src={user?.img}
-                            alt="Avatar Tailwind CSS Component"
-                          />
+          {/* <tbody>
+            {searchedUsers.length > 0
+              ? searchedUsers.map((user, index) => (
+                  <tr key={user._id}>
+                    <th>{index + 1}</th>
+                    <td>
+                      <div className="flex items-center  gap-3">
+                        <div className="avatar">
+                          <div className="mask mask-squircle w-12 h-12">
+                            <img
+                              src={user?.img}
+                              alt="Avatar Tailwind CSS Component"
+                            />
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </td>
-                  <td>{user.name}</td>
-                  <td>{user.email}</td>
-                  <td>
-                    {user.role === "admin" ? (
-                      "Admin"
-                    ) : (
+                    </td>
+                    <td>{user.name}</td>
+                    <td>{user.email}</td>
+                    <td>
+                      {user.role === "admin" ? (
+                        "Admin"
+                      ) : (
+                        <button
+                          onClick={() => handleMakeAdmin(user)}
+                          className="btn btn-lg bg-purple-200"
+                        >
+                          <FaUsers className=" text-xl "></FaUsers>
+                        </button>
+                      )}
+                    </td>
+                    <td>
                       <button
-                        onClick={() => handleMakeAdmin(user)}
-                        className="btn btn-lg bg-purple-200"
+                        onClick={() => handleDeleteUser(user)}
+                        className="btn btn-ghost btn-xs"
                       >
-                        <FaUsers className=" text-xl "></FaUsers>
+                        <FaTrashAlt className="text-red-600 text-xl"></FaTrashAlt>
                       </button>
-                    )}
-                  </td>
-                  <td>
+                    </td>
+                  </tr>
+                ))
+              : users.map((user, index) => (
+                  <tr key={user._id}>
+                    <th>{index + 1}</th>
+                    <td>
+                      <div className="flex items-center  gap-3">
+                        <div className="avatar">
+                          <div className="mask mask-squircle w-12 h-12">
+                            <img
+                              src={user?.img}
+                              alt="Avatar Tailwind CSS Component"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>{user.name}</td>
+                    <td>{user.email}</td>
+                    <td>
+                      {user.role === "admin" ? (
+                        "Admin"
+                      ) : (
+                        <button
+                          onClick={() => handleMakeAdmin(user)}
+                          className="btn btn-lg bg-purple-200"
+                        >
+                          <FaUsers className=" text-xl "></FaUsers>
+                        </button>
+                      )}
+                    </td>
+                    <td>
+                      <button
+                        onClick={() => handleDeleteUser(user)}
+                        className="btn btn-ghost btn-xs"
+                      >
+                        <FaTrashAlt className="text-red-600 text-xl"></FaTrashAlt>
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+          </tbody> */}
+
+          <tbody>
+            {searchedUsers?.map((user, index) => (
+              <tr key={user._id}>
+                <th>{index + 1}</th>
+                <td>
+                  <div className="flex items-center  gap-3">
+                    <div className="avatar">
+                      <div className="mask mask-squircle w-12 h-12">
+                        <img
+                          src={user?.img}
+                          alt="Avatar Tailwind CSS Component"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </td>
+                <td>{user.name}</td>
+                <td>{user.email}</td>
+                <td>
+                  {user.role === "admin" ? (
+                    "Admin"
+                  ) : (
                     <button
-                      onClick={() => handleDeleteUser(user)}
-                      className="btn btn-ghost btn-xs"
+                      onClick={() => handleMakeAdmin(user)}
+                      className="btn btn-lg bg-purple-200"
                     >
-                      <FaTrashAlt className="text-red-600 text-xl"></FaTrashAlt>
+                      <FaUsers className=" text-xl "></FaUsers>
                     </button>
-                  </td>
-                </tr>
-              )
-            )}
+                  )}
+                </td>
+                <td>
+                  <button
+                    onClick={() => handleDeleteUser(user)}
+                    className="btn btn-ghost btn-xs"
+                  >
+                    <FaTrashAlt className="text-red-600 text-xl"></FaTrashAlt>
+                  </button>
+                </td>
+              </tr>
+            ))}
           </tbody>
 
           <div className="text-center   flex items-center justify-end my-5   mr-12 ">
             <Pagination
-             
-                count={totalPages}
+              count={totalPages}
               page={page}
               onChange={handlePageChange}
               variant="outlined"
               shape="rounded"
             />
           </div>
-
-         
         </table>
       </div>
     </div>

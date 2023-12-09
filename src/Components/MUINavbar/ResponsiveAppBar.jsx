@@ -26,6 +26,7 @@ function ResponsiveAppBar() {
       .catch((error) => console.log(error));
   };
   const userName = user?.displayName;
+  const email = user?.email
 
   // const pages = ['Home', 'All Class', 'Teach On SkillSurge'];
   const pages = [
@@ -33,7 +34,7 @@ function ResponsiveAppBar() {
     { text: "All Class", onclick: () => navigate("/allClasses") },
     {
       text: "Teach On SkillSurge",
-      onclick: () => navigate("/teachOnSkillSurge"),
+      onclick: () => navigate(`/teachOnSkillSurge/${email}`),
     },
   ];
   // const settings = [ userName ,  'Dashboard', 'Logout'];

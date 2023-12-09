@@ -79,6 +79,10 @@ const TeachOnSkillSurge = () => {
     fetchTeacherData();
   }, [axiosPublic, user?.email]);
 
+  console.log(teacherData);
+
+
+
   return (
 
 

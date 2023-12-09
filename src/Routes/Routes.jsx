@@ -36,8 +36,8 @@ const router = createBrowserRouter([
         element: <Home></Home>,
       },
       {
-        path: "/teachOnSkillSurge",
-        element: <TeachOnSkillSurge></TeachOnSkillSurge>,
+        path: "/teachOnSkillSurge/:email",
+        element:<PrivateRoute> <TeachOnSkillSurge></TeachOnSkillSurge> </PrivateRoute>,
       },
       {
         path: "/allClasses",
